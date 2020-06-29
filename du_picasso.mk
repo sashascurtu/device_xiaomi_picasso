@@ -15,6 +15,8 @@ $(call inherit-product, device/xiaomi/picasso/device.mk)
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/du/config/common_full_phone.mk)
 
+USE_GAPPS := true
+
 # Device identifier. This must come after all inclusions.
 PRODUCT_NAME := du_picasso
 PRODUCT_DEVICE := picasso
