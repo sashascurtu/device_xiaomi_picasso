@@ -165,3 +165,6 @@ PRODUCT_FULL_TREBLE_OVERRIDE := true
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 2
+
+# Inherit from the proprietary version
+-include vendor/xiaomi/picasso/BoardConfigVendor.mk
