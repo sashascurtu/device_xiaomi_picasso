@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
-import org.lineageos.settings.device.doze.DozeUtils;
+import org.lineageos.settings.device.thermal.ThermalUtils;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
@@ -42,11 +42,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         } catch (Exception e) {
             // Ignore
         }
-
-        // Doze
-        DozeUtils.checkDozeService(context);
-        // Force apply our default value for doze if it is not set.
-        DozeUtils.enableDoze(context, DozeUtils.isDozeEnabled(context));
+        ThermalUtils.startService(context);
     }
 
 }
