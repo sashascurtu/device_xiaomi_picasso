@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# MiuiCamera
-$(call inherit-product, vendor/MiuiCamera/config.mk)
+# ANXCamera
+$(call inherit-product, vendor/ANXCamera/config.mk)
 
 # Inherit from picasso device
 $(call inherit-product, device/xiaomi/picasso/device.mk)
