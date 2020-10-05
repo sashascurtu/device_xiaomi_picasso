@@ -41,8 +41,8 @@ TARGET_KERNEL_ARCH := arm64
 # TODO: figure out why OSS DTB / DTBO do not work
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtbCM-20.7.30
 #BOARD_KERNEL_SEPARATED_DTBO := true
-BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img-20.7.30
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel-20.7.30
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img-12.05-stable
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel-12.05-stable
 ifeq ($(TARGET_PREBUILT_KERNEL),)
   TARGET_KERNEL_SOURCE := kernel/xiaomi/sm7250
   TARGET_KERNEL_CONFIG := vendor/picasso_user_defconfig
