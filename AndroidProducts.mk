@@ -5,4 +5,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/bliss_picasso.mk
+    $(LOCAL_DIR)/aosip_picasso.mk
