@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (C) 2020 The DUOS Project
+# Copyright (C) 2020 The Nusantara Project
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,7 +16,7 @@ if [[ ! -d "${MY_DIR}" ]]; then MY_DIR="${PWD}"; fi
 
 DU_ROOT="${MY_DIR}"/../../..
 
-HELPER="${DU_ROOT}/vendor/du/build/tools/extract_utils.sh"
+HELPER="${NUSANTARA_ROOT}/vendor/nusantara/build/tools/extract_utils.sh"
 if [ ! -f "${HELPER}" ]; then
     echo "Unable to find helper script at ${HELPER}"
     exit 1

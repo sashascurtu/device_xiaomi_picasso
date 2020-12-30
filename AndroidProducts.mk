@@ -5,4 +5,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosip_picasso.mk
+    $(LOCAL_DIR)/nad_picasso.mk
+
+COMMON_LUNCH_CHOICES := \
+    nad_picasso-user \
+    nad_picasso-userdebug \
+    nad_picasso-eng

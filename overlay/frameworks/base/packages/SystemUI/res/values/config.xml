@@ -21,5 +21,32 @@
      for different hardware and product builds. -->
 <resources>
     <!-- Doze: does this device support STATE_DOZE?  -->
-    <bool name="doze_display_state_supported">true</bool>
+    <bool name="doze_display_state_supported">false</bool>
+
+    <!-- Doze: check proximity sensor before pulsing? -->
+    <bool name="doze_proximity_check_before_pulse">false</bool>
+
+    <!-- Whether usage of the proximity sensor during doze is supported -->
+    <bool name="doze_proximity_sensor_supported">false</bool>
+
+    <!-- FPSInfoService FPS node file path -->
+    <string name="config_fpsInfoSysNode" translatable="false">/sys/class/drm/sde-crtc-0/measured_fps</string>
+
+    <!-- Max visible notification icons -->
+    <integer name="config_maxVisibleNotificationIcons">25</integer>
+    <integer name="config_maxVisibleNotificationIconsWhenDark">25</integer>
+
+    <!-- Smart replies in notifications: Whether we disable the feature unless the app targets P -->
+    <bool name="config_smart_replies_in_notifications_requires_targeting_p">false</bool>
+
+    <!-- Smart replies in notifications: Whether by default tapping on a choice should let the user
+         edit the input before it is sent to the app. Developers can override this via
+         RemoteInput.Builder.setEditChoicesBeforeSending. -->
+    <bool name="config_smart_replies_in_notifications_edit_choices_before_sending">true</bool>
+
+    <!-- Unify back gesture vibration with system wide haptics -->
+    <bool name="config_vibrateOnIconAnimation">true</bool>
+
+    <!-- Preferred refresh rate at keyguard, if supported by the display -->
+    <integer name="config_keyguardRefreshRate">120</integer>
 </resources>

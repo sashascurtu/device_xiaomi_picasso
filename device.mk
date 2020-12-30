@@ -1,13 +1,8 @@
 #
-# Copyright (C) 2020 The LineageOS Project
+# Copyright (C) 2020 AICP
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
@@ -17,27 +12,27 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 # Get non-open-source specific aspects
 $(call inherit-product, vendor/xiaomi/picasso/picasso-vendor.mk)
 
+include $(LOCAL_PATH)/system_prop.mk
+include $(LOCAL_PATH)/system.prop
+include $(LOCAL_PATH)/product_prop.mk
+PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
+
+PRODUCT_BUILD_SUPER_PARTITION := false
+BOARD_BUILD_PRODUCT_IMAGE := true
+PRODUCT_SHIPPING_API_LEVEL := 29
 PRODUCT_TARGET_VNDK_VERSION := 29
 PRODUCT_SHIPPING_API_LEVEL := 29
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
 PRODUCT_BUILD_PRODUCT_IMAGE := true
 
-# Properties
-include $(LOCAL_PATH)/product_prop.mk
-PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
-
-# No A/B
+# A/B status
 AB_OTA_UPDATER := false
 
 # ANT+
 PRODUCT_PACKAGES += \
-    AntHalService 
-
-# Charging
-PRODUCT_PACKAGES += \
-    charger_res_images \
-    product_charger_res_images
+    AntHalService \
+    vendor.xiaomi.hardware.fingerprintextension@1.0
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -47,30 +42,41 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_policy_engine_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/audio_policy_engine_configuration.xml
 
-# Camera
+# Binder
 PRODUCT_PACKAGES += \
-    Snap
+    libhwbinder \
+    libhwbinder.vendor \
+    libhidltransport
+
+# Bluetooth
+PRODUCT_PACKAGES += \
+    BluetoothQti
+    
+# Charging
+PRODUCT_PACKAGES += \
+    charger_res_images \
+    product_charger_res_images
 
 # Configs
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_profiles_vendor.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/media_profiles_vendor.xml
 
-# Device Settings
-PRODUCT_PACKAGES += \
-    DeviceSettings
-
 PRODUCT_COPY_FILES += \
-     $(LOCAL_PATH)/audio/audio_policy_engine_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/audio_policy_engine_configuration.xml
-     
-    # Bluetooth
+    $(LOCAL_PATH)/parts/privapp-permissions-parts.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-parts.xml
+
+# CustomDoze
 PRODUCT_PACKAGES += \
-    BluetoothQti
+    CustomDoze
 
-# Audio
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/audio/,$(TARGET_COPY_OUT_VENDOR)/etc)
+# Display
+PRODUCT_PACKAGES += \
+    libdisplayconfig \
+    libqdMetaData \
+    libqdMetaData.system \
+    libvulkan \
+    vendor.display.config@1.0
 
-# Consumer IR
+# fastbootd
 PRODUCT_PACKAGES += \
     fastbootd
 
@@ -89,9 +95,15 @@ PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
     android.hidl.manager@1.0
 
+# Hotword Enrollment
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/hotword-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/hotword-hiddenapi-package-whitelist.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-hotword.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-hotword.xml
+
 # Init scripts
 PRODUCT_PACKAGES += \
-    init.qcom.rc
+    init.qcom.rc \
+    init.mi_thermald.rc
 
 # Keylayout
 PRODUCT_COPY_FILES += \
@@ -104,17 +116,19 @@ PRODUCT_PACKAGES += \
 
 # NFC
 PRODUCT_PACKAGES += \
+    NQNfcNci \
+    com.nxp.nfc.nq \
+    android.hardware.nfc@1.0:64 \
+    android.hardware.nfc@1.1:64 \
+    android.hardware.nfc@1.2:64 \
+    android.hardware.secure_element@1.0:64 \
     com.android.nfc_extras \
-    com.gsma.services.nfc \
-    NfcNci \
-    SecureElement \
-    android.hardware.secure_element@1.0 \
-    Tag
+    vendor.nxp.nxpese@1.0:64 \
+    vendor.nxp.nxpnfc@1.0:64
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
+    $(LOCAL_PATH)/overlay
 
 PRODUCT_PACKAGES += \
     NotchNoFillOverlay
@@ -134,10 +148,21 @@ PRODUCT_PACKAGES += \
     qti_telephony_hidl_wrapper.xml \
     qti-telephony-utils \
     qti_telephony_utils.xml \
-    telephony-ext \
+    telephony-ext 
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
-PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/prebuilt/modules-12.0.6,$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/lib/modules)
+# WiFi Display
+PRODUCT_PACKAGES += \
+    libnl
 
+# XiaomiParts
+PRODUCT_PACKAGES += \
+    XiaomiParts
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/parts/privapp-permissions-parts.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-parts.xml
+
+PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/prebuilt/modules-12.0.7,$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/lib/modules)
+$(call inherit-product-if-exists, vendor/gapps/config.mk)
